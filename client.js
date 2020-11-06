@@ -2,20 +2,24 @@ const io = require('socket.io-client');
 
 let socket = io.connect("http://localhost:8000/games");
 
-socket.on("welcome",(msg) =>  {
-    console.log("Received : ", msg);
+socket.on("welcome", (wel_msg) => { console.log(wel_msg); });
+
+socket.emit("joinRoom","Pubg");
+
+socket.on("newUser", (user_msg) => { 
+    console.log(user_msg);
 });
 
-socket.emit("joinRoom", "Pubg");
-
-socket.on("newUser", (msg)=>{
-    console.log(msg);
+socket.on("success",(success_msg) => {
+    console.log(success_msg);
 });
 
-socket.on("success",(msg)=>{
-    console.log(msg);
+socket.on("err", (error_msg) => {
+    console.log(error_msg);
 });
 
-socket.on("err", (msg)=>{
-    console.log(msg);
+socket.emit("colour","blue"); 
+
+socket.on("selected_colour", (colour_msg) => { 
+    console.log(colour_msg); 
 });

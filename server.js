@@ -1,16 +1,12 @@
-const express = require('express');
-const app = express();
 const http = require('http').createServer();
-
 const io = require('socket.io')(http);
 
-//io.on("connection", (socket) => {  socket.emit("welcome","welcome to socket.io"); });
-
-const games = ["Pubg", "COD" , "MiniMiltia"];
+let games = ["Pubg", "COD" , "MiniMiltia"];
 
 io
     .of("/games")                           //namespace
     .on("connection", (socket) => {
+        console.log("new client connected...");
         socket.emit("welcome", "Welcome to game section");
         socket.on('joinRoom', (room) => {         
             if (games.includes(room)){ 
@@ -25,6 +21,9 @@ io
                 return socket.emit("err", "Room not found"); 
             }
         });
+        socket.on("colour",(colour)=>{
+            socket.emit("selected_colour",`your colour is ${colour}`);
+        })
     });
 
 http.listen(8000, () => { console.log("Running on port 8000...")});
