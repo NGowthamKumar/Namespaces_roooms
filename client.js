@@ -2,7 +2,9 @@ const io = require('socket.io-client');
 
 let socket = io.connect("http://localhost:8000/games");
 
-socket.on("welcome", (wel_msg) => { console.log(wel_msg); });
+socket.on("welcome", (welcome_msg) => { 
+    console.log(welcome_msg); 
+});
 
 socket.emit("joinRoom","Pubg");
 
